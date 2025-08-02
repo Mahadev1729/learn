@@ -111,11 +111,7 @@
               <div class="icon"><i class="bi bi-easel"></i></div>
               <h4 class="title"><a href="">{{ feature.name }}</a></h4>
               <p class="description">{{ feature.details }}</p>
-              {% if feature.is_true == True %}
-              <p>This features is True</p>
-              {%else%} 
-              <p>This feature is False</p>
-              {% endif %}
+              
             </div>
           </div>
           {% endfor %}
