@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from .models import Feature
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login
+
+
 
 
 def index(request):
@@ -38,3 +41,27 @@ def register(request):
             messages.info(request,"Password must be same")
             return redirect('register')       
     return render(request,'register.html')
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        if not username or not password:
+            messages.error(request, 'Please enter both username and password')
+            return redirect('login')
+        
+        user = authenticate(username=username, password=password)
+        
+        if user is not None:
+            auth_login(request, user)
+            return redirect('/')
+        else:
+            messages.error(request, 'Invalid credentials')
+            return redirect('login')
+    else:    
+        return render(request, 'login.html')
+    
+def logout(request):
+    auth.logout(request)
+    return redirect('/')    
