@@ -33,4 +33,8 @@ def register(request):
                 user=User.objects.create_user(username=username,email=email,password=password)
                 user.save()
                 return redirect('login')
+                
+        else:
+            messages.info(request,"Password must be same")
+            return redirect('register')       
     return render(request,'register.html')
